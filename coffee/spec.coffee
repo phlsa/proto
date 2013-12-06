@@ -12,14 +12,15 @@ stat = Proto.staticAlias
 			scope: 'div.scoped'
 
 # test
-$('body, .scoped').append($('<button class="main">New button</div>'))
+$('.scoped').append($('<button class="main">Dynamic in scope</div>'))
+$('body').append($('<button class="main">Dynamic out of scope</div>'))
 elems.btn().css color:'red'
-stat.btn().css 'background-color':'#eee'
+stat.btn().css 'background-color':'#bbb'
 
 
 # temporarily change attributes of an item
-Proto.pluckClass listItems, 'animationName', 3000			# Add a class and automatically remove it after a timeout
-Proto.pluckProperty listItems, {opacity: 1}, 2000			# Add properties and automatically remove them after a timeout
+Proto.pluckClass elems.listItems(), 'someClass', 3000				# Add a class and automatically remove it after a timeout
+Proto.pluckProperties elems.listItems(), {opacity: 1}, 2000			# Add properties and automatically remove them after a timeout
 
 # call a bunch of functions in succession
 animation = Proto.timeline
@@ -33,7 +34,7 @@ animation = Proto.timeline
 	options: 
 		autostart: false
 		repeat: 'infinite'
-
+###
 animation.start()			# kick off the animation
 animation.pause()			# pause the animation
 animation.resume()			# resume at the next keyframe
@@ -41,5 +42,5 @@ animation.resume()			# resume at the next keyframe
 # general delay
 Proto.after '2s', -> doStuff()	# having the time value at the end like setTimeout and _.delay is an abomination. let's fix that
 
-Proto.commitAnimations();		# do some magic that makes sure that all subsequent changes are animated and not optimized away
+Proto.commitProperties elems.btn(), 'opacity', 'transform';		# do some magic that makes sure that all subsequent changes are animated and not optimized away
 ###
