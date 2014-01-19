@@ -27,7 +27,7 @@ Proto.events
 
 # temporarily change attributes of an item
 Proto.pluckClass elems.listItems(), 'someClass', 3000				# Add a class and automatically remove it after a timeout
-Proto.pluckProperties elems.listItems(), {opacity: 1}, 2000			# Add properties and automatically remove them after a timeout
+Proto.pluckCSS elems.listItems(), {opacity: 1}, 2000			# Add properties and automatically remove them after a timeout
 
 # call a bunch of functions in succession
 animation = Proto.timeline
