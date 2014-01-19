@@ -15,9 +15,18 @@ window.Proto =
 		Proto.alias elems, opts
 
 
+	events: (events, opts) ->
+		_.defaults opts, scope:document
+		_.each events, (fn, key) ->
+			event = key.split(' ')[0]
+			elem = _.rest key.split(' ')
+			jQuery(elem).on event, fn
+
+
 	pluckClass: (elem, classes, timeout) ->
 		elem.toggleClass classes
 		Proto.after timeout, -> elem.toggleClass classes
+
 
 	pluckProperties: (elem, props, timeout) ->
 		originalValues = {}
@@ -32,11 +41,15 @@ window.Proto =
 	after: (timeout, fn) ->
 		window.setTimeout fn, Proto.utils.millis(timeout)
 
+
 	every: (timeout, fn) ->
 		window.setInterval fn, Proto.utils.millis(timeout)
 
+
 	timeline: (def) ->
 		new Proto.Timeline def
+
+
 
 	utils:
 		millis: (input) ->
@@ -49,6 +62,9 @@ window.Proto =
 				output = parseInt input
 			output
 
+
+
+
 class Proto.Timeline
 	constructor: (@def) ->
 		@currentKey # get first key out of the definition
@@ -58,9 +74,11 @@ class Proto.Timeline
 				action: item
 		@keyframes = _.sortBy @keyframes, 'time'
 
+
 	start: ->
 		_.each @keyframes, (item) ->
 			item.timeout = Proto.after item.time, item.action
+
 
 	stop: ->
 		_.each @keyframes, (item) ->

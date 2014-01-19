@@ -17,6 +17,13 @@ $('body').append($('<button class="main">Dynamic out of scope</div>'))
 elems.btn().css color:'red'
 stat.btn().css 'background-color':'#bbb'
 
+# bind a number of events to elements
+Proto.events
+	"click button.main": (e) ->
+		console.log 'Main button clicked'
+		console.log e
+	"mousemove .somelist": ->
+		console.log 'Mouse moved over some list'
 
 # temporarily change attributes of an item
 Proto.pluckClass elems.listItems(), 'someClass', 3000				# Add a class and automatically remove it after a timeout
